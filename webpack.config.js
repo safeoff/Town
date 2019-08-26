@@ -13,7 +13,13 @@ module.exports = {
         test: /\.ts$/,
         // TypeScript をコンパイルする
         use: "ts-loader"
-      }
+	  },
+	  {
+        // 対象となるファイルの拡張子
+        test: /\.(gif|png|jpg)$/,
+        // 画像をBase64として取り込む
+        loader: "url-loader"
+	  }
     ]
   },
   // import 文で .ts ファイルを解決するため
