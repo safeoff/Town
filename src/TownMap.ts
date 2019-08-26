@@ -1,6 +1,7 @@
 // 町データ管理クラス。画像のロード、マップ画面の描画も担当する。
 export class TownMap {
 	public static SOURCE_SIZE = 1;
+	public static SOURCE_NUM = 1;
 	public static MAP_W = 1;
 	public static MAP_H = 1;
 

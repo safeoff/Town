@@ -4,9 +4,33 @@ import { Point } from "./Point";
 
 // 経路探索クラス。現在地から目的地までの経路を中継ノードを挿入しつつ、再帰的に検索する。
 export class RouteSearch {
-	SEARCH_LEVEL = 1;
+	/*
+	* SEARCH_LEVELの値が小さいほどノードの数は増えるが、
+     * その分、再検索の回数が減る傾向にある。
+     * 逆に、SEARCH_LEVELが大きいと、ノード数が減り、再検索が増える。
+     * このマップでは2～4が妥当な数値で、あまり大きな数だと
+     * ゴールに到達できない場合があるので注意が必要。
+     */
+    private SEARCH_LEVEL = 3;
+
+    /** マップ当たり情報 */
+	private static mapInfo: number[][] = new Array(TownMap.SOURCE_NUM);
+    /** 移動可能地点リスト */
+    private static streetPos: Array<Point>;
+    /** 経路探索後の最大ノード数 */
+    private static nodeMax = 0;
+    /** 最大再検索数 */
+    private static retryMax = 0;
+    /** のべ目標到達回数 */
+	private static goalCount = 0;
+
 	// 指定された縮小マップ画像を元に通路の当たり判定を取得し初期化する。
-	constructor() {}
+	constructor() {
+		// マップ当たり情報を初期化
+		for (let i= 0; i < RouteSearch.mapInfo.length; i++) {
+			RouteSearch.mapInfo[i] = new Array(TownMap.SOURCE_NUM);
+		}
+	}
 	// キャラクターが進行方向に進めるかどうかを判定する。
 	canMove() {}
 	// ランダムに通行可能な場所を取得
