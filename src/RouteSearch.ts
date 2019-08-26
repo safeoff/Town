@@ -1,5 +1,5 @@
 import { Node } from "./Node";
-import { TownMap} from "./TownMap";
+import { TownMap } from "./TownMap";
 import { Point } from "./Point";
 
 // 経路探索クラス。現在地から目的地までの経路を中継ノードを挿入しつつ、再帰的に検索する。
@@ -14,7 +14,8 @@ export class RouteSearch {
     private SEARCH_LEVEL = 3;
 
     /** マップ当たり情報 */
-	private static mapInfo: number[][] = new Array(TownMap.SOURCE_NUM);
+	// private static mapInfo: number[][] = new Array(TownMap.SOURCE_NUM);
+	private static mapInfo: number[][] = new Array(60);
     /** 移動可能地点リスト */
     private static streetPos: Array<Point>;
     /** 経路探索後の最大ノード数 */
@@ -28,7 +29,8 @@ export class RouteSearch {
 	constructor(image: HTMLImageElement) {
 		// マップ当たり情報を初期化
 		for (let i= 0; i < RouteSearch.mapInfo.length; i++) {
-			RouteSearch.mapInfo[i] = new Array(TownMap.SOURCE_NUM);
+			// RouteSearch.mapInfo[i] = new Array(TownMap.SOURCE_NUM);
+			RouteSearch.mapInfo[i] = new Array(60);
 		}
 	}
 	// キャラクターが進行方向に進めるかどうかを判定する。
