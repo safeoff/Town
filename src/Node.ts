@@ -1,16 +1,13 @@
 // 経路探索の中継点(x, y)座標を保持するリンクリスト
 export class Node {
-	private readonly x: number;
-	private readonly y: number;
-	private readonly next: Node;
+	public x: number;
+	public y: number;
+	private next: Node;
 
 	// 座標は(0, 0)で初期化されます。
-	constructor(x, y) {
-		// x座標
+	constructor(x: number, y: number) {
 		this.x = 0;
-		// y座標
 		this.y = 0;
-		// 次のノード
 		this.next = null;
 		// 引数で座標を初期化します。
 		if (x != null) {
@@ -19,11 +16,20 @@ export class Node {
 		}
 	}
 	// 次のノードを返します。
-	getNext() {}
+	public getNext(): Node {
+		return this.next;
+	}
 	// 次のノードを設定します。
-	setNext() {}
+	public setNext(next: Node): void {
+		this.next = next;
+	}
 	// ノードを次のノードとの間に挿入します。
-	insert() {}
+	public insert(node: Node): void {
+		node.setNext(this.next);
+		this.next = node;
+	}
 	// 次のノードを取り除きます。
-	removeNext() {}
+	public removeNext(): void {
+		this.next = this.next.getNext();
+	}
 }
