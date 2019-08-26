@@ -1,5 +1,6 @@
 import { Node } from "./Node";
 import { TownMap} from "./TownMap";
+import { Point } from "./Point";
 
 // 経路探索クラス。現在地から目的地までの経路を中継ノードを挿入しつつ、再帰的に検索する。
 export class RouteSearch {
@@ -9,7 +10,7 @@ export class RouteSearch {
 	// キャラクターが進行方向に進めるかどうかを判定する。
 	canMove() {}
 	// ランダムに通行可能な場所を取得
-	getRandomPos() {}
+	getRandomPos(): Point {return new Point();}
 	// 次ノードにまっすぐ行けるかどうか
 	isStraight(node: Node): boolean;
 	isStraight(node: Node, nextNode: Node): boolean;

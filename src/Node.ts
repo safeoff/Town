@@ -1,3 +1,5 @@
+import { Point } from "./Point";
+
 // 経路探索の中継点(x, y)座標を保持するリンクリスト
 export class Node {
 	public x: number;
@@ -5,15 +7,22 @@ export class Node {
 	private next: Node;
 
 	// 座標は(0, 0)で初期化されます。
-	constructor(x?: number, y?: number) {
+	constructor();
+	constructor(x: number, y: number);
+	constructor(p: Point);
+	constructor(arg1?: any, arg2?: any) {
 		this.x = 0;
 		this.y = 0;
 		this.next = null;
 		// 引数で座標を初期化します。
-		if (x != null) {
-			this.x = x;
-			this.y = y;
+		if (arg1 == null) return;
+		if (typeof arg1 === "number") {
+			this.x = arg1;
+			this.y = arg2;
+			return;
 		}
+		this.x = arg1.x;
+		this.y = arg1.y;
 	}
 
 	// 次のノードを返します。
