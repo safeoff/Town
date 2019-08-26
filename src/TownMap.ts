@@ -1,5 +1,6 @@
 import { People } from "./People";
 import { Point } from "./Point";
+import * as streetImage from "../images/map0.gif";
 
 // 町データ管理クラス。画像のロード、マップ画面の描画も担当する。
 export class TownMap {
@@ -52,6 +53,8 @@ export class TownMap {
 
 	// 画像の読み込み、拡大マップ表示用の裏画面の準備、人々の初期化を行う。
 	constructor() {
+		this.streetImage = document.createElement("img");
+		this.streetImage.src = streetImage;
 	}
 	// 通路情報が描かれた縮小マップ画像を返します。
 	getStreetImage() {}
