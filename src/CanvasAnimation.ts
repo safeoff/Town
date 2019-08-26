@@ -1,4 +1,4 @@
-import { TowmMap } from "./TownMap";
+import { TownMap } from "./TownMap";
 
 // 街情報を更新し、再描画する。
 export class CanvasAnimation {
@@ -53,7 +53,7 @@ export class CanvasAnimation {
 		this.ctx1.fillRect(this.a, 0, 10, 10);
 		this.ctx2.fillRect(this.a, 50, 10, 10);
 		this.ctx3.fillRect(this.a, 100, 10, 10);
-		const townmap = new TowmMap();
+		const townmap = new TownMap();
 		this.a = townmap.inca(this.a);
 		window.requestAnimationFrame(() => this.draw());
 	}
