@@ -15,19 +15,23 @@ export class Node {
 			this.y = y;
 		}
 	}
+
 	// 次のノードを返します。
 	public getNext(): Node {
 		return this.next;
 	}
+
 	// 次のノードを設定します。
 	public setNext(next: Node): void {
 		this.next = next;
 	}
+
 	// ノードを次のノードとの間に挿入します。
 	public insert(node: Node): void {
 		node.setNext(this.next);
 		this.next = node;
 	}
+
 	// 次のノードを取り除きます。
 	public removeNext(): void {
 		this.next = this.next.getNext();
