@@ -25,7 +25,7 @@ export class RouteSearch {
 	private static goalCount = 0;
 
 	// 指定された縮小マップ画像を元に通路の当たり判定を取得し初期化する。
-	constructor() {
+	constructor(image) {
 		// マップ当たり情報を初期化
 		for (let i= 0; i < RouteSearch.mapInfo.length; i++) {
 			RouteSearch.mapInfo[i] = new Array(TownMap.SOURCE_NUM);
