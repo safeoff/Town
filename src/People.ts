@@ -1,6 +1,7 @@
 import { RouteSearch } from "./RouteSearch";
 import { Point } from "./Point";
 import { Node } from "./Node";
+import { TownMap } from "./TownMap";
 
 // 町の人クラス
 export class People {
@@ -78,42 +79,88 @@ export class People {
 	// 目的地に到達している場合は、目的地の再設定。
 	public update(counter: number): void {
 		// マップソース単位の処理
-		if (condition) {
+		if (this.pos.x % TownMap.SOURCE_SIZE == 0 && this.pos.y % TownMap.SOURCE_SIZE == 0) {
+
 			// ノードに到着していたときの処理
-			if (condition) {
-				if (condition) {
+			if (this.pos.x == this.node.x && this.pos.y == this.node.y) {
+				const nodeNext = this.node.getNext();
+				if (nodeNext == null) {
 					// 目的地到着　再設定
+					this.setGoal();
+					RouteSearch.countGoal();
 					// 経路探索
+					this.rs.searchRoute(this.node, 1);
 					// ゴール到着ステータス
-				} else if (condition) {
+					this.status = People.GOAL;
+					this.dispTime = People.DISP_TIME;
+				} else if (!this.rs.isStraight(this.node)) {
 					// まっすぐ進めなかったらゴールまで再探索
+					this.node.setNext(new Node(this.goal));
+					this.rs.searchRoute(this.node, 1);
 					// 再建策数を集計
+					this.retryMax++;
+					RouteSearch.setRetryMax(this.retryMax);
 					// 再建策ステータス
+					this.status = People.SEARCH;
+					this.dispTime = People.DISP_TIME;
 				}
 				// 次のノードへ進む
+				this.node = this.node.getNext();
+			}
+
+			if (this.pos.x == this.node.x) {
+				if (this.pos.y > this.node.y) {
+					this.dir = People.NORTH;
+				} else {
+					this.dir = People.SOUTH;
+				}
+			} else if (this.pos.y == this.node.y) {
+				if (this.pos.x > this.node.x) {
+					this.dir = People.WEST;
+				} else {
+					this.dir = People.EAST;
+				}
 			}
 		}
 
 		// 進行方向に進む
-		switch (key) {
-			case value:
-
+		switch (this.dir) {
+			case People.WEST:
+				this.pos.x--;
 				break;
-
-			default:
+			case People.NORTH:
+				this.pos.y--;
+				break;
+			case People.EAST:
+				this.pos.x++;
+				break;
+			case People.SOUTH:
+				this.pos.y++;
 				break;
 		}
 
 		// 1つのマップソースを2歩で歩く
+		if (counter % TownMap.SOURCE_SIZE > (TownMap.SOURCE_SIZE / 2)) {
+			this.walkPattern = People.RIGHT;
+		} else {
+			this.walkPattern = People.LEFT;
+		}
 
 		// ステータスの表示時間を減らす
+		if (--this.dispTime <= 0) {
+			this.status = People.NORMAL;
+		}
 	}
 
 	// 新たな目標地点をランダムに設定する。
 	public setGoal(): void {
 		// 通路上の座標を目的地に設定
+		this.goal = new Point(this.rs.getRandomPos());
 		// 現在の座標を最初のノードに指定
+		this.node = new Node(this.pos);
 		// 目的地を次のノードに指定
+		this.node.setNext(new Node(this.goal));
 		// 再建策数を初期化
+		this.retryMax = 0;
 	}
 }

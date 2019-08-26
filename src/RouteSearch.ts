@@ -138,7 +138,7 @@ export class RouteSearch {
 	// 最大再検索数を返します。
 	getRetryMax() {}
 	// 与えられた値が現在の最大値より大きければ最大値を更新。
-	setRetryMax() {}
+	static setRetryMax(retryMax: number) {}
 	// 目標地点到達回数をインクリメントする。
-	countGoal() {}
+	static countGoal() {}
 }
