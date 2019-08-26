@@ -5,7 +5,7 @@ export class Node {
 	private next: Node;
 
 	// 座標は(0, 0)で初期化されます。
-	constructor(x: number, y: number) {
+	constructor(x?: number, y?: number) {
 		this.x = 0;
 		this.y = 0;
 		this.next = null;
