@@ -54,7 +54,7 @@ export class TownMap {
     private counter = 0;
 
     /** スクロール座標 */
-	private screenPos: Point;
+	private screenPos: Point = new Point();
 
 	// 画像の読み込み、拡大マップ表示用の裏画面の準備、人々の初期化を行う。
 	constructor() {

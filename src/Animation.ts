@@ -56,21 +56,56 @@ export class Animation {
 		}
 
 		// 主人公の先頭のノードを取得
+		let node = mainPeople.node;
+		const pos = mainPeople.pos;
+		const goal = mainPeople.goal;
 
 		// 主人公が目指すノードへの線を描画
+		this.ctx.strokeStyle = "rgb(0, 190, 255)";
+		this.ctx.beginPath();
+		this.ctx.moveTo(Animation.STREET_X + pos.x / 8 + 2, Animation.STREET_Y + pos.y / 8 + 2);
+		this.ctx.lineTo(Animation.STREET_X + node.x / 8 + 2, Animation.STREET_Y + node.y / 8 + 2);
+		this.ctx.closePath();
+		this.ctx.stroke();
 
 		// 主人公の探索経路を描画 while
+		while (node != null) {
+			const nextNode = node.getNext();
+
 			// 次のノードが存在するなら線を描画
+			if (nextNode != null) {
+				this.ctx.strokeStyle = "rgb(100, 100, 100)";
+				this.ctx.beginPath();
+				this.ctx.moveTo(Animation.STREET_X + node.x / 8 + 2, Animation.STREET_Y + node.y / 8 + 2);
+				this.ctx.lineTo(Animation.STREET_X + nextNode.x / 8 + 2, Animation.STREET_Y + nextNode.y / 8 + 2);
+				this.ctx.closePath();
+				this.ctx.stroke();
+			}
 			// ノードの描画
+			this.ctx.fillStyle = "rgb(240, 0, 0)";
+			this.ctx.fillRect(Animation.STREET_X + node.x / 8, Animation.STREET_Y + node.y / 8, 4, 4);
 			// 次のノードに移動
+			node = nextNode;
+		}
 
 		// 主人公の位置を描画
-
+		this.ctx.fillStyle = "red";
+		this.ctx.fillRect(Animation.STREET_X + pos.x / 8, Animation.STREET_Y + pos.y / 8, 4, 4);
 		// 目的地を描画
+		this.ctx.fillStyle = "orange";
+		this.ctx.fillRect(Animation.STREET_X + goal.x / 8, Animation.STREET_Y + goal.y / 8, 4, 4);
+		this.ctx.fillStyle = "red";
+		this.ctx.rect(Animation.STREET_X + goal.x / 8, Animation.STREET_Y + goal.y / 8, 4, 4);
 
 		// 表示エリアを表す矩形
+		const screenPos = this.town.getScreenPos();
+		this.ctx.fillStyle = "rgb(240, 30, 30)";
+		this.ctx.rect(Animation.STREET_X + screenPos.x / 8, Animation.STREET_Y + screenPos.y / 8, 44, 44);
 
 		// 街の情報表示
+		this.ctx.fillStyle = "rgb(110, 71, 43)";
+		this.ctx.fillText("Map座標 : x = " + screenPos.x + ", y =" + screenPos.y,
+		Animation.STREET_X, 280 + 16 * 0);
 
 		// 拡大マップの描画
 		window.requestAnimationFrame(() => this.draw());
