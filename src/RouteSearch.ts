@@ -222,8 +222,6 @@ export class RouteSearch {
 		return relayNode;
 	}
 
-	private countNode(node: Node): number {return 1;}
-	private nodeMax = 1;
 	// 次のノードまでのルートを探索する。再帰的に呼び出されるが、
 	// その際には、呼び出しレベルをインクリメントして次に渡すこと。
 	// そのレベルを元に、検索の精度が変化する。
@@ -256,17 +254,40 @@ export class RouteSearch {
 
 		// 最大ノード数を集計
 		const count = this.countNode(node);
-		this.nodeMax = Math.max(this.nodeMax, count);
+		RouteSearch.nodeMax = Math.max(RouteSearch.nodeMax, count);
+	}
+
+	// そのノードから終端までの長さを数える。
+	private countNode(node: Node): number {
+		let count = 1;
+		while ((node = node.getNext()) != null) {
+			count++;
+		}
+		return count;
 	}
 
 	// ゴールカウントを返します。
-	getGoalCount() {}
+	public static getGoalCount(): number {
+		return RouteSearch.goalCount;
+	}
+
 	// ノードの最大数を返します。
-	getNodeMax() {}
+	public static getNodeMax(): number {
+		return RouteSearch.nodeMax;
+	}
+
 	// 最大再検索数を返します。
-	getRetryMax() {}
+	public static getRetryMax(): number {
+		return RouteSearch.retryMax;
+	}
+
 	// 与えられた値が現在の最大値より大きければ最大値を更新。
-	static setRetryMax(retryMax: number) {}
+	public static setRetryMax(retryMax: number): void {
+		RouteSearch.retryMax = Math.max(RouteSearch.retryMax, retryMax)
+	}
+
 	// 目標地点到達回数をインクリメントする。
-	static countGoal() {}
+	public static countGoal(): void {
+		RouteSearch.goalCount++;
+	}
 }
