@@ -46,7 +46,7 @@ export class TownMap {
     private mapImage = document.createElement("canvas");
 
     /** 町の人のリスト */
-    private peopleList: Array<People> = new Array();
+    private peopleList: Array<People>;
     /** 主人公 */
     private mainPeople: People;
 
@@ -66,9 +66,15 @@ export class TownMap {
 		this.charImage.src = charImage;
 		this.statusImage.src = statusImage;
 
+		// マップ表示用裏画面
+		this.mapImage.width = TownMap.SCREEN_W;
+		this.mapImage.height = TownMap.SCREEN_H;
+
 		// 移動探索アルゴリズム
 		const rs = new RouteSearch(this.streetImage);
 
+		// 人々の初期化
+		this.peopleList = new Array();
 		// 主人公の生成
 		this.mainPeople = new People(rs);
 		// 主人公専用タイプ
