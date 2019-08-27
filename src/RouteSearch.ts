@@ -49,7 +49,8 @@ export class RouteSearch {
 		for (let y = 0; y < TownMap.SOURCE_NUM; y++) {
 			for (let x = 0; x < TownMap.SOURCE_NUM; x++) {
 				// 色を表すdata属性はRGBAの順で並ぶ
-				if (pixels.data[x * 4 * 4 + (y * 4 * 4) * w] == 255) {
+				const it = x * 4 * 4 + (y * 4 * 4) * w;
+				if (pixels.data[it] == 255) {
 					RouteSearch.mapInfo[x][y] = 1;
 				} else {
 					RouteSearch.mapInfo[x][y] = 0;
