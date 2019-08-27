@@ -1,4 +1,5 @@
 import { TownMap } from "./TownMap";
+import { RouteSearch } from "./RouteSearch";
 
 // 街情報を更新し、再描画する。
 export class Animation {
@@ -106,6 +107,16 @@ export class Animation {
 		this.ctx.fillStyle = "rgb(110, 71, 43)";
 		this.ctx.fillText("Map座標 : x = " + screenPos.x + ", y =" + screenPos.y,
 		Animation.STREET_X, 280 + 16 * 0);
+		this.ctx.fillText("時間 : " + this.town.getCounter(),
+		Animation.STREET_X, 280 + 16 * 1);
+		this.ctx.fillText("人数 : " + peopleList.length + "人",
+		Animation.STREET_X, 280 + 16 * 2);
+		this.ctx.fillText("最大ノード数 : " + RouteSearch.getNodeMax() + "個",
+		Animation.STREET_X, 280 + 16 * 3);
+		this.ctx.fillText("最大再検索 : " + RouteSearch.getRetryMax() + "回",
+		Animation.STREET_X, 280 + 16 * 4);
+		this.ctx.fillText("のべ目標到達 " + RouteSearch.getGoalCount() + "回",
+		Animation.STREET_X, 280 + 16 * 5);
 
 		// 拡大マップの描画
 		window.requestAnimationFrame(() => this.draw());
