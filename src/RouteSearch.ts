@@ -40,7 +40,6 @@ export class RouteSearch {
 		// 通路の座標を取得　目的地の選択などに使う
 		// base64の画像をImageDataに変換
 		const canvas = document.createElement("canvas");
-		let a = document.getElementById("canvas1");
 		canvas.width = w;
 		canvas.height = h;
 		const ctx = canvas.getContext("2d");
@@ -49,7 +48,8 @@ export class RouteSearch {
 		const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
 		for (let y = 0; y < TownMap.SOURCE_NUM; y++) {
 			for (let x = 0; x < TownMap.SOURCE_NUM; x++) {
-				if (pixels.data[x * 4 * 4 + (y * 4) * w] == 255) {
+				// 色を表すdata属性はRGBAの順で並ぶ
+				if (pixels.data[x * 4 * 4 + (y * 4 * 4) * w] == 255) {
 					RouteSearch.mapInfo[x][y] = 1;
 				} else {
 					RouteSearch.mapInfo[x][y] = 0;
