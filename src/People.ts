@@ -35,13 +35,13 @@ export class People {
 	private static idCounter = 0;
 
 	/** ID番号 */
-	private id: number;
+	private id = 0;
 	/** 経路探査アルゴリズム */
 	private rs: RouteSearch;
 	/** 最大リトライ回数 */
-	private retryMax: number;
+	private retryMax = 0;
 	/** ステータス表示時間 */
-	private dispTime: number;
+	private dispTime = 0;
 
 	/** 移動経路 */
 	public node: Node;
@@ -50,13 +50,13 @@ export class People {
 	/** 目標座標 */
 	public goal: Point;
 	/** 表示パターン */
-	public walkPattern: number;
+	public walkPattern = 0;
 	/** 移動方向 */
-	public dir: number = 0;
+	public dir = 0;
 	/** キャラタイプ */
-	public type: number;
+	public type = 0;
 	/** 頭上マークの状態 */
-	public status: number;
+	public status = 0;
 
 	// 町の人の状態を初期化。タイプ、現在地、目的地はランダム。
 	constructor(rs: RouteSearch) {

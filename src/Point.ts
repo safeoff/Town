@@ -1,16 +1,14 @@
 // 座標
 export class Point {
 	// x座標
-	public x: number;
+	public x = 0;
 	// y座標
-	public y: number;
+	public y = 0;
 
 	constructor();
 	constructor(p: Point);
 	constructor(x: number, y: number);
 	constructor(arg1?: any, arg2?: any) {
-		this.x = 0;
-		this.y = 0;
 		// constructor();
 		if (arg1 == undefined) return;
 		// constructor(x: number, y: number);
