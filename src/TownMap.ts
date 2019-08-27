@@ -67,7 +67,7 @@ export class TownMap {
 		this.statusImage.src = statusImage;
 
 		// 移動探索アルゴリズム
-		const rs = new RouteSearch(streetImage);
+		const rs = new RouteSearch(this.streetImage);
 
 		// 主人公の生成
 		this.mainPeople = new People(rs);
