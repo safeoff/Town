@@ -1,6 +1,7 @@
 import { Node } from "./Node";
 import { TownMap } from "./TownMap";
 import { Point } from "./Point";
+import { People } from "./People";
 
 // 経路探索クラス。現在地から目的地までの経路を中継ノードを挿入しつつ、再帰的に検索する。
 export class RouteSearch {
@@ -67,6 +68,7 @@ export class RouteSearch {
 	private isStreet(node: Node): boolean;
 	private isStreet(arg1: any, arg2?: any): boolean{
 		// 指定された座標が道かどうか判定する。
+		// private isStreet(x: number, y: number): boolean;
 		if (typeof arg1 === "number") {
 			// mapInfoでチェックするため、マップソース座標に変換
 			const sx = arg1 / TownMap.SOURCE_SIZE;
@@ -76,6 +78,7 @@ export class RouteSearch {
 			if (sy > RouteSearch.mapInfo[sx].length) return false;
 
 			return RouteSearch.mapInfo[sx][sy] == 0 ? true : false;
+		// private isStreet(node: Node): boolean;
 		} else {
 			// 指定された座標が道かどうか判定する。
 			return this.isStreet(arg1.x, arg1.y);
@@ -83,15 +86,74 @@ export class RouteSearch {
 	}
 
 	// キャラクターが進行方向に進めるかどうかを判定する。
-	canMove() {}
+	public canMove(people: People): boolean {
+		// 人物の現在位置
+		let x = people.pos.x;
+		let y = people.pos.y;
+
+		// 進もうとする座標を取得
+		switch (people.dir) {
+			case People.NORTH:
+				y -= TownMap.SOURCE_SIZE;
+				break;
+			case People.SOUTH:
+				y += TownMap.SOURCE_SIZE;
+				break;
+			case People.EAST:
+				x += TownMap.SOURCE_SIZE;
+				break;
+			case People.WEST:
+				x -= TownMap.SOURCE_SIZE;
+				break;
+		}
+
+		// 通行可能かどうかのチェック
+		return this.isStreet(x, y);
+	}
+
 	// ランダムに通行可能な場所を取得
-	getRandomPos(): Point {return new Point();}
+	getRandomPos(): Point {
+		return RouteSearch.streetPos[Math.floor(Math.random() * RouteSearch.streetPos.length)]
+	}
 	// 次ノードにまっすぐ行けるかどうか
 	isStraight(node: Node): boolean;
 	isStraight(node: Node, nextNode: Node): boolean;
 	isStraight(x: number, y: number, nx: number, ny: number): boolean;
 	isStraight(arg1: any, arg2?: any, arg3?: any, arg4?: any): boolean {
-		return true;
+		// isStraight(x: number, y: number, nx: number, ny: number): boolean;
+		if (typeof arg1 === "number") {
+			if (arg1 == arg3) {
+				// y軸方向へチェック
+				const start = Math.min(arg2, arg4);
+				const end = Math.max(arg2, arg4);
+				for (let y = start; y <= end; y += TownMap.SOURCE_SIZE) {
+					// 道じゃない場所があった場合は、まっすぐに進めない
+					if (!this.isStreet(arg1, y)) return false;
+				}
+				// まっすぐに進める
+				return true;
+			} else if (arg2 == arg4) {
+				// x軸方向へチェック
+				const start = Math.min(arg1, arg3);
+				const end = Math.max(arg1, arg3);
+				for (let x = start; x <= end; x += TownMap.SOURCE_SIZE) {
+					// 道じゃない場所があった場合は、まっすぐに進めない
+					if (!this.isStreet(x, arg2)) return false;
+				}
+				// まっすぐに進める
+				return true;
+			}
+			// 水平 or 垂直位置にないとまっすぐに進めない
+			return false;
+
+		// isStraight(node: Node): boolean;
+		} else if (arg2 == undefined) {
+			if (arg1 == null) return false;
+			return this.isStraight(arg1, arg1.getNext());
+		}
+		// isStraight(node: Node, nextNode: Node): boolean;
+		if (arg1 == null || arg2 == null) return false;
+		return this.isStraight(arg1.x, arg1.y, arg2.x, arg2.y);
 	}
 
 	private searchRelayNode(node: Node): Node {
