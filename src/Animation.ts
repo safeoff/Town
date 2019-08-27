@@ -1,11 +1,29 @@
 import { TownMap } from "./TownMap";
 
 // 街情報を更新し、再描画する。
-export class CanvasAnimation {
+export class Animation {
 	private readonly ctx1: CanvasRenderingContext2D;
 	private readonly ctx2: CanvasRenderingContext2D;
 	private readonly ctx3: CanvasRenderingContext2D;
 	private a = 0;
+    /** 全体マップ表示位置オフセット */
+    private static STREET_X = 16;
+    /** 全体マップ表示位置オフセット */
+    private static STREET_Y = 16;
+    /** 全体マップの幅 */
+    private static STREET_W = 240;
+    /** 全体マップの高さ */
+    private static STREET_H = 240;
+    /** 拡大マップ表示位置オフセット */
+    private static MAP_X = Animation.STREET_X + Animation.STREET_W + 16;
+    /** 拡大マップ表示位置オフセット */
+    private static MAP_Y = Animation.STREET_Y;
+    /** 拡大マップの幅 */
+    private static MAP_W = TownMap.SOURCE_SIZE * 11;
+    /** 拡大マップの高さ */
+    private static MAP_H = TownMap.SOURCE_SIZE * 11;
+    /** 町データ */
+    private town: TownMap;
 
 	constructor(
 		private readonly canvas1: HTMLCanvasElement,
@@ -29,7 +47,7 @@ export class CanvasAnimation {
 		// 全体マップの描画
 		// 実際のマップの1/8の大きさなので、マップ上の座標を8で割れば
 		// 縮小マップにおける表示位置になる。
-
+		this.ctx1.drawImage(this.town.getStreetImage(), Animation.STREET_X, Animation.STREET_Y)
 		// 人物位置描画
 
 		// 主人公の先頭のノードを取得
