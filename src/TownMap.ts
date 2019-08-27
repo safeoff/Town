@@ -46,7 +46,7 @@ export class TownMap {
     private mapImage = document.createElement("canvas");
 
     /** 町の人のリスト */
-    private peopleList: Array<People>;
+    private peopleList: Array<People> = new Array();
     /** 主人公 */
     private mainPeople: People;
 
