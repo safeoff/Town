@@ -16,7 +16,7 @@ export class RouteSearch {
     /** マップ当たり情報 */
 	private static mapInfo: number[][];
     /** 移動可能地点リスト */
-    private static streetPos: Array<Point>;
+    private static streetPos: Array<Point> = new Array();
     /** 経路探索後の最大ノード数 */
     private static nodeMax = 0;
     /** 最大再検索数 */
@@ -34,26 +34,52 @@ export class RouteSearch {
 
 		// 縮小マップは4ドットで1マップソースになっている
 		const w = TownMap.SOURCE_NUM * 4;
-
-		// 画像を読み込むための配列
-		// try {
-
-		// } catch (error) {
-
-		// }
+		const h = TownMap.SOURCE_NUM * 4;
 
 		// 通路の座標を取得　目的地の選択などに使う
+		// base64の画像をImageDataに変換
+		const canvas = document.createElement("canvas");
+		let a = document.getElementById("canvas1");
+		canvas.width = w;
+		canvas.height = h;
+		const ctx = canvas.getContext("2d");
+		// 白のドットは通過不可能
+		image.onload = function() {
+			ctx.drawImage(image, 0, 0);
+			const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
+			for (let y = 0; y < TownMap.SOURCE_NUM; y++) {
+				for (let x = 0; x < TownMap.SOURCE_NUM; x++) {
+					if (pixels.data[x * 4 * 4 + (y * 4) * w] == 255) {
+						RouteSearch.mapInfo[x][y] = 1;
+					} else {
+						RouteSearch.mapInfo[x][y] = 0;
+						// 道になっている部分のマップ上の座標を保持
+						RouteSearch.streetPos.push(new Point(x * TownMap.SOURCE_SIZE,
+							y * TownMap.SOURCE_SIZE));
+					}
+				}
+			}
+		}
+	}
 
-		// 白のドットは通貨不可能
-		//for (let index = 0; index < array.length; index++) {
-		//	for (let index = 0; index < array.length; index++) {
-		//		if (condition) {
+	// 指定された座標/ノードが道かどうか判定する。
+	private isStreet(x: number, y: number): boolean;
+	private isStreet(node: Node): boolean;
+	private isStreet(arg1: any, arg2?: any): boolean{
+		// 指定された座標が道かどうか判定する。
+		if (typeof arg1 === "number") {
+			// mapInfoでチェックするため、マップソース座標に変換
+			const sx = arg1 / TownMap.SOURCE_SIZE;
+			const sy = arg2 / TownMap.SOURCE_SIZE;
+			// 配列の範囲外はfalseでリターン
+			if (sx > RouteSearch.mapInfo.length) return false;
+			if (sy > RouteSearch.mapInfo[sx].length) return false;
 
-		//		} else {
-
-		//		}
-		//	}
-		//}
+			return RouteSearch.mapInfo[sx][sy] == 0 ? true : false;
+		} else {
+			// 指定された座標が道かどうか判定する。
+			return this.isStreet(arg1.x, arg1.y);
+		}
 	}
 
 	// キャラクターが進行方向に進めるかどうかを判定する。
@@ -65,15 +91,6 @@ export class RouteSearch {
 	isStraight(node: Node, nextNode: Node): boolean;
 	isStraight(x: number, y: number, nx: number, ny: number): boolean;
 	isStraight(arg1: any, arg2?: any, arg3?: any, arg4?: any): boolean {
-		return true;
-	}
-
-	private isStreet(node: Node): boolean;
-	private isStreet(x: number, y: number): boolean;
-	private isStreet(arg1: any, arg2?: any): boolean{
-		if (typeof arg1 === "number") {
-			return true;
-		}
 		return true;
 	}
 

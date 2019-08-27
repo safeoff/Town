@@ -7,10 +7,14 @@ export class Point {
 
 	constructor();
 	constructor(p: Point);
-	constructor(p?: Point) {
-		if (p != null) {
-			this.x = p.x;
-			this.y = p.y;
+	constructor(x: number, y: number);
+	constructor(arg1?: any, arg2?: any) {
+		if (arg1 == null) return;
+		if (typeof arg1 === "number") {
+			this.x = arg1;
+			this.y = arg2;
 		}
+		this.x = arg1.x;
+		this.y = arg1.y;
 	}
 }
