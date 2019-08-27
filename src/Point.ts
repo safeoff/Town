@@ -9,6 +9,8 @@ export class Point {
 	constructor(p: Point);
 	constructor(x: number, y: number);
 	constructor(arg1?: any, arg2?: any) {
+		this.x = 0;
+		this.y = 0;
 		// constructor();
 		if (arg1 == undefined) return;
 		// constructor(x: number, y: number);
