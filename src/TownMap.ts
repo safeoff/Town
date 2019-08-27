@@ -130,8 +130,6 @@ export class TownMap {
 		}
 
 		// マップ前景の描画
-		// ctx.drawImage(this.mapFgImage, 0, 0, mapWidth, mapHeight, this.screenPos.x, this.screenPos.y,
-		// 	this.screenPos.x + mapWidth, this.screenPos.y + mapHeight);
 		ctx.drawImage(this.mapFgImage, this.screenPos.x, this.screenPos.y,
 			mapWidth, mapHeight, 0, 0, mapWidth, mapHeight)
 	}

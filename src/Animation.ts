@@ -29,8 +29,6 @@ export class Animation {
 		) {
 			this.ctx = canvas.getContext('2d');
 			this.town = new TownMap();
-			this.ctx.fillStyle = "rgb(233, 214, 178)";
-			this.ctx.fillRect(0, 0, canvas.width, canvas.height);
 			window.requestAnimationFrame(() => this.draw());
 	}
 
@@ -40,6 +38,8 @@ export class Animation {
 	draw() {
 		// 背景の消去
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+		this.ctx.fillStyle = "rgb(233, 214, 178)";
+		this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 		// 全体マップの描画
 		// 実際のマップの1/8の大きさなので、マップ上の座標を8で割れば
 		// 縮小マップにおける表示位置になる。
