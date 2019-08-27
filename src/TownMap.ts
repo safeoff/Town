@@ -1,11 +1,11 @@
 import { People } from "./People";
 import { Point } from "./Point";
+import { RouteSearch } from "./RouteSearch";
 import * as streetImage from "../images/map0.gif";
 import * as mapBgImage from "../images/map1.gif";
 import * as mapFgImage from "../images/map2.gif";
 import * as charImage from "../images/people.gif";
 import * as statusImage from "../images/status.gif";
-import { RouteSearch } from "./RouteSearch";
 
 // 町データ管理クラス。画像のロード、マップ画面の描画も担当する。
 export class TownMap {

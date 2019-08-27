@@ -14,8 +14,7 @@ export class RouteSearch {
     private SEARCH_LEVEL = 3;
 
     /** マップ当たり情報 */
-	// private static mapInfo: number[][] = new Array(TownMap.SOURCE_NUM);
-	private static mapInfo: number[][] = new Array(60);
+	private static mapInfo: number[][];
     /** 移動可能地点リスト */
     private static streetPos: Array<Point>;
     /** 経路探索後の最大ノード数 */
@@ -28,11 +27,35 @@ export class RouteSearch {
 	// 指定された縮小マップ画像を元に通路の当たり判定を取得し初期化する。
 	constructor(image: HTMLImageElement) {
 		// マップ当たり情報を初期化
+		RouteSearch.mapInfo = new Array(TownMap.SOURCE_NUM);
 		for (let i= 0; i < RouteSearch.mapInfo.length; i++) {
-			// RouteSearch.mapInfo[i] = new Array(TownMap.SOURCE_NUM);
-			RouteSearch.mapInfo[i] = new Array(60);
+			RouteSearch.mapInfo[i] = new Array(TownMap.SOURCE_NUM);
 		}
+
+		// 縮小マップは4ドットで1マップソースになっている
+		const w = TownMap.SOURCE_NUM * 4;
+
+		// 画像を読み込むための配列
+		// try {
+
+		// } catch (error) {
+
+		// }
+
+		// 通路の座標を取得　目的地の選択などに使う
+
+		// 白のドットは通貨不可能
+		//for (let index = 0; index < array.length; index++) {
+		//	for (let index = 0; index < array.length; index++) {
+		//		if (condition) {
+
+		//		} else {
+
+		//		}
+		//	}
+		//}
 	}
+
 	// キャラクターが進行方向に進めるかどうかを判定する。
 	canMove() {}
 	// ランダムに通行可能な場所を取得
