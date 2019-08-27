@@ -45,19 +45,17 @@ export class RouteSearch {
 		canvas.height = h;
 		const ctx = canvas.getContext("2d");
 		// 白のドットは通過不可能
-		image.onload = function() {
-			ctx.drawImage(image, 0, 0);
-			const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
-			for (let y = 0; y < TownMap.SOURCE_NUM; y++) {
-				for (let x = 0; x < TownMap.SOURCE_NUM; x++) {
-					if (pixels.data[x * 4 * 4 + (y * 4) * w] == 255) {
-						RouteSearch.mapInfo[x][y] = 1;
-					} else {
-						RouteSearch.mapInfo[x][y] = 0;
-						// 道になっている部分のマップ上の座標を保持
-						RouteSearch.streetPos.push(new Point(x * TownMap.SOURCE_SIZE,
-							y * TownMap.SOURCE_SIZE));
-					}
+		ctx.drawImage(image, 0, 0);
+		const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
+		for (let y = 0; y < TownMap.SOURCE_NUM; y++) {
+			for (let x = 0; x < TownMap.SOURCE_NUM; x++) {
+				if (pixels.data[x * 4 * 4 + (y * 4) * w] == 255) {
+					RouteSearch.mapInfo[x][y] = 1;
+				} else {
+					RouteSearch.mapInfo[x][y] = 0;
+					// 道になっている部分のマップ上の座標を保持
+					RouteSearch.streetPos.push(new Point(x * TownMap.SOURCE_SIZE,
+						y * TownMap.SOURCE_SIZE));
 				}
 			}
 		}
