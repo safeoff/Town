@@ -3,7 +3,6 @@ import { TownMap } from "./TownMap";
 // 街情報を更新し、再描画する。
 export class Animation {
 	private readonly ctx: CanvasRenderingContext2D;
-	private a = 0;
     /** 全体マップ表示位置オフセット */
     private static STREET_X = 16;
     /** 全体マップ表示位置オフセット */
@@ -72,9 +71,6 @@ export class Animation {
 		// 街の情報表示
 
 		// 拡大マップの描画
-		this.ctx.fillRect(this.a, 0, 10, 10);
-		const townmap = new TownMap();
-		this.a = townmap.inca(this.a);
 		window.requestAnimationFrame(() => this.draw());
 	}
 }

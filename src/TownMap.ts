@@ -184,6 +184,4 @@ export class TownMap {
 	public getCounter(): number {
 		return this.counter;
 	}
-	// テスト用
-	inca(a: number) {return a+1;}
 }
