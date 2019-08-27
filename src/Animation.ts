@@ -119,6 +119,8 @@ export class Animation {
 		Animation.STREET_X, 280 + 16 * 5);
 
 		// 拡大マップの描画
+		this.town.drawMapImage();
+		this.ctx.drawImage(this.town.getMapImage(), Animation.MAP_X, Animation.MAP_Y);
 		window.requestAnimationFrame(() => this.draw());
 	}
 }
