@@ -44,8 +44,8 @@ export class Animation {
 		// 実際のマップの1/8の大きさなので、マップ上の座標を8で割れば
 		// 縮小マップにおける表示位置になる。
 		this.ctx.drawImage(this.town.getStreetImage(), Animation.STREET_X, Animation.STREET_Y);
-		this.ctx.fillStyle = "rgb(211, 211, 211)";
-		this.ctx.fillRect(Animation.STREET_X, Animation.STREET_Y, Animation.STREET_W, Animation.STREET_W);
+		// this.ctx.fillStyle = "rgb(211, 211, 211)";
+		// this.ctx.fillRect(Animation.STREET_X, Animation.STREET_Y, Animation.STREET_W, Animation.STREET_W);
 
 		const mainPeople = this.town.getMainPeople();
 
@@ -95,13 +95,19 @@ export class Animation {
 		// 目的地を描画
 		this.ctx.fillStyle = "orange";
 		this.ctx.fillRect(Animation.STREET_X + goal.x / 8, Animation.STREET_Y + goal.y / 8, 4, 4);
-		this.ctx.fillStyle = "red";
+		this.ctx.strokeStyle = "red";
+		this.ctx.beginPath();
 		this.ctx.rect(Animation.STREET_X + goal.x / 8, Animation.STREET_Y + goal.y / 8, 4, 4);
+		this.ctx.closePath();
+		this.ctx.stroke();
 
 		// 表示エリアを表す矩形
 		const screenPos = this.town.getScreenPos();
-		this.ctx.fillStyle = "rgb(240, 30, 30)";
+		this.ctx.strokeStyle = "rgb(240, 30, 30)";
+		this.ctx.beginPath();
 		this.ctx.rect(Animation.STREET_X + screenPos.x / 8, Animation.STREET_Y + screenPos.y / 8, 44, 44);
+		this.ctx.closePath();
+		this.ctx.stroke();
 
 		// 街の情報表示
 		this.ctx.fillStyle = "rgb(110, 71, 43)";
