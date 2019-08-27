@@ -15,12 +15,15 @@ export class Node {
 		this.y = 0;
 		this.next = null;
 		// 引数で座標を初期化します。
-		if (arg1 == null) return;
+		// constructor();
+		if (arg1 == undefined) return;
+		// constructor(x: number, y: number);
 		if (typeof arg1 === "number") {
 			this.x = arg1;
 			this.y = arg2;
 			return;
 		}
+		// constructor(p: Point);
 		this.x = arg1.x;
 		this.y = arg1.y;
 	}

@@ -9,11 +9,14 @@ export class Point {
 	constructor(p: Point);
 	constructor(x: number, y: number);
 	constructor(arg1?: any, arg2?: any) {
-		if (arg1 == null) return;
+		// constructor();
+		if (arg1 == undefined) return;
+		// constructor(x: number, y: number);
 		if (typeof arg1 === "number") {
 			this.x = arg1;
 			this.y = arg2;
 		}
+		// constructor(p: Point);
 		this.x = arg1.x;
 		this.y = arg1.y;
 	}
