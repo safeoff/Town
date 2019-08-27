@@ -104,8 +104,8 @@ export class TownMap {
 		const mapHeight = this.mapImage.height;
 		const ctx = this.mapImage.getContext('2d');
 		// マップ背景の描画
-		ctx.drawImage(this.mapBgImage, 0, 0, mapWidth, mapHeight, this.screenPos.x, this.screenPos.y,
-			this.screenPos.x + mapWidth, this.screenPos.y + mapHeight)
+		ctx.drawImage(this.mapBgImage, this.screenPos.x, this.screenPos.y,
+			mapWidth, mapHeight, 0, 0, mapWidth, mapHeight)
 
 		// 人々の描画
 		for (let i = 0; i < this.peopleList.length; i++) {
@@ -115,28 +115,25 @@ export class TownMap {
 			const destX = people.pos.x - this.screenPos.x;
 			const destY = people.pos.y - this.screenPos.y - 8;
 
-			ctx.drawImage(this.charImage, destX, destY,
-				destX + TownMap.WIDTH, destY + TownMap.HEIGHT, srcX, srcY,
-				srcX + TownMap.WIDTH, srcY + TownMap.HEIGHT);
+			ctx.drawImage(this.charImage, srcX, srcY, TownMap.WIDTH, TownMap.HEIGHT,
+				destX, destY, TownMap.WIDTH, TownMap.HEIGHT);
 
 			// ゴール到達ステータスを表示
 			if (people.status == People.GOAL) {
-				ctx.drawImage(this.statusImage, destX, destY - 32,
-					destX + 32, destY,
-					0, 0, 32, 32)
+				ctx.drawImage(this.statusImage, 0, 0, 32, 32, destX, destY - 32, 32, 32);
 			}
 
 			// 再検索ステータスを表示
 			if (people.status == People.SEARCH) {
-				ctx.drawImage(this.statusImage, destX, destY - 32,
-					destX + 32, destY,
-					32, 0, 64, 32)
+				ctx.drawImage(this.statusImage, 32, 0, 32, 32, destX, destY - 32, 32, 32);
 			}
 		}
 
 		// マップ前景の描画
-		ctx.drawImage(this.mapFgImage, 0, 0, mapWidth, mapHeight, this.screenPos.x, this.screenPos.y,
-			this.screenPos.x + mapWidth, this.screenPos.y + mapHeight);
+		// ctx.drawImage(this.mapFgImage, 0, 0, mapWidth, mapHeight, this.screenPos.x, this.screenPos.y,
+		// 	this.screenPos.x + mapWidth, this.screenPos.y + mapHeight);
+		ctx.drawImage(this.mapFgImage, this.screenPos.x, this.screenPos.y,
+			mapWidth, mapHeight, 0, 0, mapWidth, mapHeight)
 	}
 
 	// 時間を進め、町の人々を移動させます。移動後に人々はY座標でソートされます。
