@@ -17,6 +17,7 @@ export class Point {
 		if (typeof arg1 === "number") {
 			this.x = arg1;
 			this.y = arg2;
+			return;
 		}
 		// constructor(p: Point);
 		this.x = arg1.x;
