@@ -52,7 +52,7 @@ export class People {
 	/** 表示パターン */
 	public walkPattern: number;
 	/** 移動方向 */
-	public dir: number;
+	public dir: number = 0;
 	/** キャラタイプ */
 	public type: number;
 	/** 頭上マークの状態 */
