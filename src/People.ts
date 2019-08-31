@@ -97,10 +97,10 @@ export class People {
 					// まっすぐ進めなかったらゴールまで再探索
 					this.node.setNext(new Node(this.goal));
 					this.rs.searchRoute(this.node, 1);
-					// 再建策数を集計
+					// 再検索数を集計
 					this.retryMax++;
 					RouteSearch.setRetryMax(this.retryMax);
-					// 再建策ステータス
+					// 再検索ステータス
 					this.status = People.SEARCH;
 					this.dispTime = People.DISP_TIME;
 				}
