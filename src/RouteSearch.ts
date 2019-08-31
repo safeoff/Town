@@ -73,8 +73,8 @@ export class RouteSearch {
 			const sx = arg1 / TownMap.SOURCE_SIZE;
 			const sy = arg2 / TownMap.SOURCE_SIZE;
 			// 配列の範囲外はfalseでリターン
-			if (sx > RouteSearch.mapInfo.length) return false;
-			if (sy > RouteSearch.mapInfo[sx].length) return false;
+			if (sx >= RouteSearch.mapInfo.length) return false;
+			if (sy >= RouteSearch.mapInfo[sx].length) return false;
 
 			return RouteSearch.mapInfo[sx][sy] == 0 ? true : false;
 		// private isStreet(node: Node): boolean;
@@ -169,7 +169,7 @@ export class RouteSearch {
 		// 次のノードとの位置関係で場合分けする
 		if (node.x == nextNode.x) {
 			// 上下に移動可能な場所を探す
-			for (let d = 0; d < TownMap.MAP_W; d += TownMap.SOURCE_SIZE) {
+			for (let d = 0; d <= TownMap.MAP_W; d += TownMap.SOURCE_SIZE) {
 				if (this.isStreet(relayNode.x + d, relayNode.y)) {
 					relayNode.x = relayNode.x + d;
 					break;
@@ -180,7 +180,7 @@ export class RouteSearch {
 			}
 		} else if (node.y == nextNode.y) {
 			// 左右に移動可能な場所を探す
-			for (let d = 0; d < TownMap.MAP_H; d += TownMap.SOURCE_SIZE) {
+			for (let d = 0; d <= TownMap.MAP_H; d += TownMap.SOURCE_SIZE) {
 				if (this.isStreet(relayNode.x, relayNode.y + d)) {
 					relayNode.y = relayNode.y + d;
 					break;
@@ -194,18 +194,18 @@ export class RouteSearch {
 			if (this.isStraight(node.x, node.y, node.x, nextNode.y) &&
 			this.isStraight(node.x, nextNode.y, nextNode.x, nextNode.y)) {
 				relayNode.x = node.x;
-				relayNode.y - nextNode.y;
+				relayNode.y = nextNode.y;
 			} else if (this.isStraight(node.x, node.y, nextNode.x, node.y) &&
 			this.isStraight(nextNode.x, node.y, nextNode.x, nextNode.y)) {
 				relayNode.x = nextNode.x;
-				relayNode.y - node.y;
+				relayNode.y = node.y;
 			} else {
 				// 斜めに移動可能な場所を探す
 				const dx = node.x < nextNode.x ? 1 : -1;
 				const dy = node.y < nextNode.y ? 1 : -1;
 
 				for (let d = 0; d <= TownMap.MAP_W; d += TownMap.SOURCE_SIZE) {
-					if (this.isStreet(relayNode.x +d, relayNode.y - d * (dx * dy))) {
+					if (this.isStreet(relayNode.x + d, relayNode.y - d * (dx * dy))) {
 						relayNode.x += d;
 						relayNode.y -= d * (dx * dy);
 						break;
@@ -234,7 +234,7 @@ export class RouteSearch {
 		// 対象のノードが進入不可能な位置にあるなら探索終了
 		if (!this.isStreet(node) || !this.isStreet(nextNode)) return;
 		// 一直線に進めるなら探索終了
-		if (!this.isStraight(node)) return;
+		if (this.isStraight(node)) return;
 
 		// 進めない場合は中継ノードを求め挿入
 		const relayNode = this.searchRelayNode(node);
