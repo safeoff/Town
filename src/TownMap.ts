@@ -81,7 +81,8 @@ export class TownMap {
 		this.mainPeople.type = 0;
 		this.peopleList.push(this.mainPeople);
 		// 主人公以外の生成
-		for (let i = 1; i < TownMap.PEOPLE_NUM; i++) {
+		for (let i = 1; i < 1; i++) {
+		// for (let i = 1; i < TownMap.PEOPLE_NUM; i++) {
 			const p = new People(rs);
 			this.peopleList.push(p);
 		}
