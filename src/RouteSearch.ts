@@ -74,7 +74,9 @@ export class RouteSearch {
 			const sy = arg2 / TownMap.SOURCE_SIZE;
 			// 配列の範囲外はfalseでリターン
 			if (sx >= RouteSearch.mapInfo.length) return false;
+			if (sx < 0) return false;
 			if (sy >= RouteSearch.mapInfo[sx].length) return false;
+			if (sy < 0) return false;
 
 			return RouteSearch.mapInfo[sx][sy] == 0 ? true : false;
 		// private isStreet(node: Node): boolean;
