@@ -118,7 +118,7 @@ export class RouteSearch {
 	}
 	// 次ノードにまっすぐ行けるかどうか
 	isStraight(node: Node): boolean;
-	isStraight(node: Node, nextNode: Node): boolean;
+	isStraight(node: Node, nextNode: Node, type: string): boolean;
 	isStraight(x: number, y: number, nx: number, ny: number): boolean;
 	isStraight(arg1: any, arg2?: any, arg3?: any, arg4?: any): boolean {
 		// isStraight(x: number, y: number, nx: number, ny: number): boolean;
@@ -147,14 +147,14 @@ export class RouteSearch {
 			// 水平 or 垂直位置にないとまっすぐに進めない
 			return false;
 
-		// isStraight(node: Node): boolean;
-		} else if (arg2 == undefined) {
-			if (arg1 == null) return false;
-			return this.isStraight(arg1, arg1.getNext());
+		// isStraight(node: Node, nextNode: Node, type: string): boolean;
+		} else if (typeof arg3 === "string") {
+			if (arg1 == null || arg2 == null) return false;
+			return this.isStraight(arg1.x, arg1.y, arg2.x, arg2.y);
 		}
-		// isStraight(node: Node, nextNode: Node): boolean;
-		if (arg1 == null || arg2 == null) return false;
-		return this.isStraight(arg1.x, arg1.y, arg2.x, arg2.y);
+		// isStraight(node: Node): boolean;
+		if (arg1 == null) return false;
+		return this.isStraight(arg1, arg1.getNext(), "");
 	}
 
 	private searchRelayNode(node: Node): Node {
@@ -243,7 +243,7 @@ export class RouteSearch {
 		if (relayNode != null) {
 			node.insert(relayNode);
 			// 余分なノードを除去
-			if (this.isStraight(relayNode, nextNode.getNext())) {
+			if (this.isStraight(relayNode, nextNode.getNext(), "")) {
 				relayNode.removeNext();
 			}
 			// 再帰的に探索
